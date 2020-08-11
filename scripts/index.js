@@ -113,8 +113,15 @@ const gameController = (gameBoard,players,turn,status) => {
   players = [player1,player2];
   const gameCycle = (board,players) => {
 
-    let currentPlayer = players[0];
-    
+    const endGame = (message,player) => {
+      if (message == "Victory") {
+        window.confirm(`"You win" + ${player.name}`);
+      }else {
+        window.confirm("DRAW")
+      }
+    }
+
+     
     const playerUpdate = () => {
       [player[0],player[1]] = [player[1],player[0]];
     }
@@ -124,11 +131,14 @@ const gameController = (gameBoard,players,turn,status) => {
       updatedBoard=board.updateBoard(evt.target.row,evt.target.column,evt.target.token);
       if (!updatedBoard ) {
         alert("Invalid Movement, try again.");
-      } else {
-      board.drawBoard();
-        playerUpdate();
+      } else {     
+        board.drawBoard();
+        if (checkVictory() == False){
+          playerUpdate();
+        } else {
+          endGame(checkVictory(), currentPlayer);
+        }
       }
-      
     }
 
     const clickListener = () => {
@@ -144,6 +154,26 @@ const gameController = (gameBoard,players,turn,status) => {
       }
     }
 
+
+    const checkVictory = (board) => {
+      const case1 = (board[0][0] == board[0][1]) && (board[0][1] == board[0][2]);
+      const case2 = (board[1][0] == board[1][1]) && (board[1][1] == board[1][2]);
+      const case3 = (board[2][0] == board[2][1]) && (board[2][1] == board[2][2]);
+      const case4 = (board[0][0] == board[1][0]) && (board[1][0] == board[2][0]);
+      const case5 = (board[0][1] == board[1][1]) && (board[1][1] == board[2][1]);
+      const case6 = (board[0][2] == board[1][2]) && (board[1][2] == board[2][2]);
+      const case7 = (board[0][0] == board[1][1]) && (board[1][1] == board[2][2]);
+      const case8 = (board[0][2] == board[1][1]) && (board[1][1] == board[2][0]);
+
+      const cases = [case1,case2,case3,case4,case5,case6,case7,case8];
+      if (cases.includes(True)){
+        return "Victory";
+      }else if (board.isFull) {
+        return "DRAW";
+      }else {
+        return False;
+      }
+    }
     
     //render the board
     //turn logic
@@ -162,6 +192,15 @@ const gameController = (gameBoard,players,turn,status) => {
     //checks for victory() 
       //analyzes the board array and compares it to victory conditions table. (1)      
       //checks the turn number and determines if there's a draw.
+
+        board.drawBoard();
+        clickListener();
+
+    //endgame()
+    // Display the winner, ask for a new game.
+    //New game it resets all the tiles and the array.
+        
+
   }
 
   //print results of the game and clean-up  (ask for a new game?)

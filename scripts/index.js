@@ -1,9 +1,15 @@
 let player1;
 let player2;
+let turn = 0;
 
 const gameBoard = (() => {
   let board = [];
-  return {board};
+  board = [[1,2,3],[4,5,6],[7,8,9]];  
+  const updateBoard = (row,column,token) => {
+    board[row][column] = token;
+    return board;
+  }
+  return { board, updateBoard};
 })();
 
 const player = (name,token) => {
@@ -67,10 +73,11 @@ const gameController = (gameBoard,players,turn,status) => {
     formDiv = document.getElementById("divForm");
     formRender(formDiv, 1);
     formRender(formDiv, 2);
+    
   }
 
   const createStartButton = () => {
-  
+
     const submitButton = document.createElement('Button');
     submitButton.addEventListener('click', startGame);
     submitButton.textContent = 'Start Game';
@@ -83,8 +90,54 @@ const gameController = (gameBoard,players,turn,status) => {
     
   //cycle of the game
 
+  players = [player1,player2];
+  const gameCycle = (board,players) => {
+
+    let currentPlayer = players[0];
+    
+    const playerUpdate = () => {
+      [player[0],player[1]] = [player[1],player[0]];
+    }
+
+    const clickListener = () => {
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          let id = i + '-' + j
+          const cellClick = document.getElementById(id);
+          cellClick.addEventListener('click', playerMovement);
+          cellClick.row = i;
+          cellClick.column = j;
+          cellClick.token = currentPlayer.token
+        }        
+      }
+    }
+
+    const playerMovement = (evt) => {      
+      board.updateBoard(evt.target.row,evt.target.column,evt.target.token);
+    }
+
+    //render the board
+    //turn logic
+      //player1 movement done
+      //checks the movement.
+        //Board full = draw.
+      //updates the board
+      //check for victory
+      //player2 movement
+      //checks the movement.      
+      //updates the board
+      //checks for victory
+      //increases turn by 1
+      //restarts
+
+    //checks for victory() 
+      //analyzes the board array and compares it to victory conditions table. (1)      
+      //checks the turn number and determines if there's a draw.
+  }
+
   //print results of the game and clean-up  (ask for a new game?)
-  
+  //update the cells with the class "cell" to empty.
+  //update the array to empty again.
   
 }
 

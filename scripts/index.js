@@ -4,12 +4,32 @@ let turn = 0;
 
 const gameBoard = (() => {
   let board = [];
-  board = [[1,2,3],[4,5,6],[7,8,9]];  
+  board = [['','',''],['','',''],['','','']];  
   const updateBoard = (row,column,token) => {
-    board[row][column] = token;
-    return board;
+    const cell = document.getElementById( row + '-' +column);
+    if (cell.innerHTML == '') {
+      board[row][column] = token;
+      return board;
+    } else {
+      return null;
+    }
+    
   }
-  return { board, updateBoard};
+
+  const drawBoard = () => {
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j <3; j += 1) {
+        cell=document.getElementById(i + '-' + j);
+        cell.innerHTML=board[i][j];
+      }     
+    }
+  }
+
+  const isFull = () => {
+   return !board.includes('')
+  }
+
+  return { board, updateBoard, drawBoard, isFull};
 })();
 
 const player = (name,token) => {
@@ -99,6 +119,18 @@ const gameController = (gameBoard,players,turn,status) => {
       [player[0],player[1]] = [player[1],player[0]];
     }
 
+    const playerMovement = (evt) => {  
+     
+      updatedBoard=board.updateBoard(evt.target.row,evt.target.column,evt.target.token);
+      if (!updatedBoard ) {
+        alert("Invalid Movement, try again.");
+      } else {
+      board.drawBoard();
+        playerUpdate();
+      }
+      
+    }
+
     const clickListener = () => {
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
@@ -112,10 +144,7 @@ const gameController = (gameBoard,players,turn,status) => {
       }
     }
 
-    const playerMovement = (evt) => {      
-      board.updateBoard(evt.target.row,evt.target.column,evt.target.token);
-    }
-
+    
     //render the board
     //turn logic
       //player1 movement done

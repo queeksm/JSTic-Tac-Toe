@@ -3,7 +3,8 @@
 //fill up the forms and start the game.
 //
 
-
+const players = [];
+let currentPlayer;
 
 const gameBoard = () => {
   let board = [];
@@ -58,25 +59,30 @@ const createFormDiv = () => {
 
 function playerCapture(evt) {
   // get values
-  const name = document.getElementById('nameField').value;
-  if (evt.target.number == 1 ) {
-    player1 = player(name, 'X');
-  } else {
-    player2 = player(name, 'O');
-  }
-
+  console.log(player1);
+  console.log(player2);
+  const name1 = document.getElementById('nameField-1').value;
+  const name2 = document.getElementById('nameField-2').value;
+  player1 = player(name1, 'X');
+  player2 = player(name2, 'O');
+  
+  currentPlayer  = player1;
+  console.log('current ' + currentPlayer);
+  
   // add to table
   console.log(player1.token);
-  const divForm = document.getElementById(`myPlayerForm-${evt.target.number}`);
+  document.getElementById(`myPlayerForm-1`).innerHTML = "";
+  document.getElementById(`myPlayerForm-2`).innerHTML = "";
   divForm.innerHTML = '';
   const playerDiv1 = document.getElementById('Player1');
   const playerDiv2 = document.getElementById('Player2');
   playerDiv1.innerHTML = `Welcome ${player1.name}, your symbol is ${player1.token}`;
   playerDiv2.innerHTML = `Welcome ${player2.name}, your symbol is ${player2.token}`;
-  
 }
 
 const formRender = (formDiv, PNumber ) => {
+  console.log(player1);
+  console.log(player2);
   formDiv.innerHTML = '';
 
   const newPlayerForm = document.createElement('FORM');
@@ -88,12 +94,12 @@ const formRender = (formDiv, PNumber ) => {
   newPlayerForm.appendChild(fieldLabel);
 
   const playerName = document.createElement('INPUT');
-  playerName.setAttribute('id', 'nameField');
+  playerName.setAttribute('id', `nameField-${PNumber}`);
   playerName.setAttribute('type', 'text');
   playerName.setAttribute('placeholder', 'Name');
   newPlayerForm.appendChild(playerName);
 
-  
+  if (PNumber == 2) {
   const submitButton = document.createElement('Button');
   submitButton.addEventListener('click', playerCapture);
   submitButton.textContent = 'Save';
@@ -101,6 +107,7 @@ const formRender = (formDiv, PNumber ) => {
   submitButton.number = PNumber;
 
   newPlayerForm.appendChild(submitButton);
+  }
 }
 
 const startGame = () => {
@@ -112,6 +119,9 @@ const startGame = () => {
 }
 
 const createStartButton = () => {
+  console.log("start button");
+  console.log(player1);
+  console.log(player2);
   buttonDiv = document.getElementById("buttonDiv");
   const submitButton = document.createElement('Button');
   submitButton.addEventListener('click', startGame);
@@ -122,8 +132,6 @@ const createStartButton = () => {
 
 const gameCycle = (board,players) => {
 
-  let currentPlayer = players[0];
-
   const endGame = (message,player) => {
     if (message == "Victory") {
       window.confirm(`"You win" + ${player.name}`);
@@ -133,14 +141,21 @@ const gameCycle = (board,players) => {
   }
    
   const playerUpdate = () => {
-    console.log();
-    players = players.reverse();
-    [player[0],player[1]] = [player[1],player[0]];
-    currentPlayer = players[0];
+    console.log("swap player")
+    console.log(currentPlayer);
+    //players = players.reverse();
+    if (currentPlayer === player1 ) {
+      currentPlayer = player2;
+    } else {
+      currentPlayer = player1;
+    }
+    //[player1,player2] = [player2,player1];
+    //currentPlayer = players[0];
+    console.log("current swaped "+ currentPlayer);
   }
 
   const playerMovement = (evt) => {
-    updatedBoard=board.updateBoard(evt.target.row,evt.target.column,evt.target.token);
+    updatedBoard=board.updateBoard(evt.target.row,evt.target.column,currentPlayer.token);
     if (!updatedBoard ) {
       alert("Invalid Movement, try again.");
     } else {     
@@ -148,12 +163,14 @@ const gameCycle = (board,players) => {
       if (checkVictory(board) == false){
         playerUpdate();
       } else {
+        console.log("current befor check victory "+ currentPlayer);
         endGame(checkVictory(board), currentPlayer);
       }
     }
   }
 
   const clickListener = () => {
+    console.log("create listener");
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         let id = i + '-' + j
@@ -161,7 +178,7 @@ const gameCycle = (board,players) => {
         cellClick.addEventListener('click', playerMovement);
         cellClick.row = i;
         cellClick.column = j;
-        cellClick.token = currentPlayer.token
+        //cellClick.token = currentPlayer.token;
       }        
     }
   }
@@ -198,7 +215,11 @@ const gameCycle = (board,players) => {
 }
 
 const go = () => {
-  let players = [player1,player2];
+  
+  players.push(player1);
+  players.push(player2);
+  
+  console.log(players);
   game = gameCycle(board,players);
   game.execute();
 }
@@ -207,7 +228,7 @@ const newGame = () => {
   
   buttonDiv = document.getElementById("buttonDiv2");
   const submitButton = document.createElement('Button');
-  submitButton.addEventListener('click', go());
+  submitButton.addEventListener('click', go);
   submitButton.textContent = 'START';
   submitButton.setAttribute('type', 'button');
   buttonDiv.appendChild(submitButton);

@@ -5,16 +5,20 @@
 
 const players = [];
 let currentPlayer;
+let flagContinue = false;
 
 const gameBoard = () => {
   let board = [];
   board = [['','',''],['','',''],['','','']];  
   const updateBoard = (row,column,token) => {
+    console.log(board[row][column]+ " = " + token);
     const cell = document.getElementById(row + '-' + column);
-    if (cell.innerHTML == '') {
+    //if (cell.innerHTML == '') {
+    if (board[row][column] == '') {
       board[row][column] = token;
       return board;
     } else {
+      console.log("cell contains "+cell.innerHTML);
       return null;
     }
     
@@ -27,6 +31,18 @@ const gameBoard = () => {
         cell.innerHTML=board[i][j];
       }     
     }
+    
+  }
+
+  const cleanBoard = () => {
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j <3; j += 1) {
+        cell=document.getElementById(`${i}-${j}`);
+        board[i][j]='';
+        cell.innerHTML=board[i][j];
+      }     
+    }
+    
   }
 
   const isFull = () => {
@@ -34,7 +50,7 @@ const gameBoard = () => {
     return condition;
   }
 
-  return { board, updateBoard, drawBoard, isFull};
+  return { board, updateBoard, drawBoard, cleanBoard, isFull};
 };
 
 const player = (name,token) => {
@@ -122,7 +138,6 @@ const createStartButton = () => {
 
 const gameCycle = (board,players) => {
 
- 
 
   const endGame = (message,player) => {
     if (message == "Victory") {
@@ -131,6 +146,8 @@ const gameCycle = (board,players) => {
     }else {
       window.confirm("DRAW");      
     }
+    flagContinue = false;
+    
   }
    
   const playerUpdate = () => {
@@ -143,19 +160,23 @@ const gameCycle = (board,players) => {
     
   }
 
-  const playerMovement = (evt) => {    
+  const playerMovement = (evt) => {  
+   if (flagContinue) {
+    console.log(board);
     updatedBoard=board.updateBoard(evt.target.row,evt.target.column,currentPlayer.token);
     if (!updatedBoard ) {
       alert("Invalid Movement, try again.");
     } else {     
+      
       board.drawBoard();
       
       if (checkVictory(board) == false){
         playerUpdate();
       } else {
-        
+       
         endGame(checkVictory(board), currentPlayer);
-      }
+        
+      }}
     }
   }
 
@@ -193,7 +214,8 @@ const gameCycle = (board,players) => {
   }
   
   const execute = () => {    
-    
+    flagContinue = true;
+    board.cleanBoard();
     board.drawBoard();
     clickListener();
   }
@@ -207,7 +229,8 @@ const go = () => {
   players.push(player1);
   players.push(player2);
   
-  
+  console.log("from go proc");
+  game = null;
   game = gameCycle(board,players);
   game.execute();
 }

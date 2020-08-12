@@ -10,7 +10,7 @@ const gameBoard = () => {
   let board = [];
   board = [['','',''],['','',''],['','','']];  
   const updateBoard = (row,column,token) => {
-    const cell = document.getElementById( row + '-' +column);
+    const cell = document.getElementById(row + '-' + column);
     if (cell.innerHTML == '') {
       board[row][column] = token;
       return board;
@@ -29,22 +29,12 @@ const gameBoard = () => {
     }
   }
 
-  const cleanBoard = () => {
-    for (let i = 0; i < 3; i += 1) {
-      for (let j = 0; j <3; j += 1) {
-        cell=document.getElementById(`${i}-${j}`);
-        cell.innerHTML= '';
-        board[i][j] = '';
-      }     
-    }
-  }
-
   const isFull = () => {
-    console.log(board.includes(''));
-   return board.includes('');
+    let condition = board[0].includes('') || board[1].includes('') || board[2].includes('');
+    return condition;
   }
 
-  return { board, updateBoard, drawBoard, isFull, cleanBoard};
+  return { board, updateBoard, drawBoard, isFull};
 };
 
 const player = (name,token) => {
@@ -59,30 +49,29 @@ const createFormDiv = () => {
 
 function playerCapture(evt) {
   // get values
-  console.log(player1);
-  console.log(player2);
+  
   const name1 = document.getElementById('nameField-1').value;
   const name2 = document.getElementById('nameField-2').value;
   player1 = player(name1, 'X');
   player2 = player(name2, 'O');
   
   currentPlayer  = player1;
-  console.log('current ' + currentPlayer);
+  
   
   // add to table
-  console.log(player1.token);
+  document.getElementById("buttonDiv").remove();
   document.getElementById(`myPlayerForm-1`).innerHTML = "";
   document.getElementById(`myPlayerForm-2`).innerHTML = "";
   divForm.innerHTML = '';
   const playerDiv1 = document.getElementById('Player1');
   const playerDiv2 = document.getElementById('Player2');
+
   playerDiv1.innerHTML = `Welcome ${player1.name}, your symbol is ${player1.token}`;
   playerDiv2.innerHTML = `Welcome ${player2.name}, your symbol is ${player2.token}`;
 }
 
 const formRender = (formDiv, PNumber ) => {
-  console.log(player1);
-  console.log(player2);
+  
   formDiv.innerHTML = '';
 
   const newPlayerForm = document.createElement('FORM');
@@ -112,19 +101,20 @@ const formRender = (formDiv, PNumber ) => {
 
 const startGame = () => {
   formDiv = document.getElementById("divForm");
-  formDiv2 = document.getElementById("divForm2")
+  formDiv2 = document.getElementById("divForm2");
+  buttonDisable = document.getElementById("111");
+  buttonDisable.disabled = true;
   formRender(formDiv, 1);
   formRender(formDiv2, 2);
   newGame();  
 }
 
 const createStartButton = () => {
-  console.log("start button");
-  console.log(player1);
-  console.log(player2);
+  
   buttonDiv = document.getElementById("buttonDiv");
   const submitButton = document.createElement('Button');
   submitButton.addEventListener('click', startGame);
+  submitButton.setAttribute("id","111")
   submitButton.textContent = 'New Players';
   submitButton.setAttribute('type', 'button');
   buttonDiv.appendChild(submitButton);
@@ -132,45 +122,45 @@ const createStartButton = () => {
 
 const gameCycle = (board,players) => {
 
+ 
+
   const endGame = (message,player) => {
     if (message == "Victory") {
-      window.confirm(`"You win" + ${player.name}`);
+      window.confirm(`"You win" ${player.name}`);
+          
     }else {
-      window.confirm("DRAW")
+      window.confirm("DRAW");      
     }
   }
    
   const playerUpdate = () => {
-    console.log("swap player")
-    console.log(currentPlayer);
-    //players = players.reverse();
+    
     if (currentPlayer === player1 ) {
       currentPlayer = player2;
     } else {
       currentPlayer = player1;
     }
-    //[player1,player2] = [player2,player1];
-    //currentPlayer = players[0];
-    console.log("current swaped "+ currentPlayer);
+    
   }
 
-  const playerMovement = (evt) => {
+  const playerMovement = (evt) => {    
     updatedBoard=board.updateBoard(evt.target.row,evt.target.column,currentPlayer.token);
     if (!updatedBoard ) {
       alert("Invalid Movement, try again.");
     } else {     
       board.drawBoard();
+      
       if (checkVictory(board) == false){
         playerUpdate();
       } else {
-        console.log("current befor check victory "+ currentPlayer);
+        
         endGame(checkVictory(board), currentPlayer);
       }
     }
   }
 
   const clickListener = () => {
-    console.log("create listener");
+    
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         let id = i + '-' + j
@@ -178,7 +168,6 @@ const gameCycle = (board,players) => {
         cellClick.addEventListener('click', playerMovement);
         cellClick.row = i;
         cellClick.column = j;
-        //cellClick.token = currentPlayer.token;
       }        
     }
   }
@@ -196,16 +185,15 @@ const gameCycle = (board,players) => {
     const cases = [case1,case2,case3,case4,case5,case6,case7,case8];
     if (cases.includes(true)){
       return "Victory";
-    }else if (!table.isFull) {
+    }else if (!table.isFull()) {
       return "DRAW";
     }else {
       return false;
     }
   }
   
-  const execute = () => {
-    console.log("I?m RUNNING");
-    board.cleanBoard();
+  const execute = () => {    
+    
     board.drawBoard();
     clickListener();
   }
@@ -219,7 +207,7 @@ const go = () => {
   players.push(player1);
   players.push(player2);
   
-  console.log(players);
+  
   game = gameCycle(board,players);
   game.execute();
 }

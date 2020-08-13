@@ -14,6 +14,7 @@ const gameBoard = () => {
     console.log(board[row][column]+ " = " + token);
     const cell = document.getElementById(row + '-' + column);
     //if (cell.innerHTML == '') {
+    console.log(board[row][column]);
     if (board[row][column] == '') {
       board[row][column] = token;
       return board;
@@ -186,7 +187,8 @@ const gameCycle = (board,players) => {
       for (let j = 0; j < 3; j++) {
         let id = i + '-' + j
         const cellClick = document.getElementById(id);
-        cellClick.addEventListener('click', playerMovement);
+        //cellClick.addEventListener('click', playerMovement);
+        cellClick.onclick = playerMovement;
         cellClick.row = i;
         cellClick.column = j;
       }        
@@ -217,6 +219,7 @@ const gameCycle = (board,players) => {
     flagContinue = true;
     board.cleanBoard();
     board.drawBoard();
+    console.log("inside execute "+board.board);
     clickListener();
   }
 

@@ -4,52 +4,47 @@ let flagContinue = false;
 
 const gameBoard = () => {
   let board = [];
-  board = [['', '', ''],['', '', ''],['', '', '']];
-  const updateBoard = (row, column, token) => {
-    
-    const cell = document.getElementById(`${row}-${column}`);
-    
+  board = [['', '', ''], ['', '', ''], ['', '', '']];
+  const updateBoard = (row, column, token) => {    
+    const cell = document.getElementById(`${row}-${column}`);    
     if (board[row][column] === '') {
       board[row][column] = token;
       return board;
-    }      
+    }
     return null;
-        
-  }
+  };
 
   const drawBoard = () => {
     for (let i = 0; i < 3; i += 1) {
-      for (let j = 0; j <3; j += 1) {
-        cell=document.getElementById(`${i}-${j}`);
-        cell.innerHTML=board[i][j];
+      for (let j = 0; j < 3; j += 1) {
+        document.getElementById(`${i}-${j}`).innerHTML = board[i][j];        
       }     
     }
-  }
+  };
 
   const cleanBoard = () => {
     for (let i = 0; i < 3; i += 1) {
-      for (let j = 0; j <3; j += 1) {
-        cell=document.getElementById(`${i}-${j}`);
-        board[i][j]='';
-        cell.innerHTML=board[i][j];
-      }     
+      for (let j = 0; j < 3; j += 1) {
+        board[i][j] = '';
+        document.getElementById(`${i}-${j}`).innerHTML=board[i][j];
+      }
     }
-  }
+  };
 
   const isFull = () => {
     let condition = board[0].includes('') || board[1].includes('') || board[2].includes('');
     return condition;
-  }
+  };
 
   return { board, updateBoard, drawBoard, cleanBoard, isFull};
 };
 
-const player = (name,token) => {
-  return {name,token};
+const player = (name, token) => {
+  return {name, token};
 };
 
 const createFormDiv = () => {
-  const formDiv = document.createElement("div");  
+  const formDiv = document.createElement("div");
   formDiv.setAttribute("id", "divForm")
   document.appendChild(formDiv);
 }

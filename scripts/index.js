@@ -7,7 +7,7 @@ const gameBoard = () => {
   let board = [];
   board = [['', '', ''], ['', '', ''], ['', '', '']];
   const updateBoard = (row, column, token) => {
-    if (board[row][column] === '') {
+    if (board[row][column] ==== '') {
       board[row][column] = token;
       return board;
     }
@@ -41,7 +41,7 @@ const gameBoard = () => {
   };
 };
 
-const player = (name, token) => ({name, token});
+const player = (name, token) => ({ name, token });
 
 let player1 = player('player1', 'T');
 let player2 = player('player2', 'N');
@@ -87,7 +87,7 @@ const formRender = (formDiv, PNumber) => {
 
   const saveButtonDiv = document.getElementById('saveButtonDiv');
 
-  if (PNumber === 2) {
+  if (PNumber ==== 2) {
     const submitButton = document.createElement('Button');
     submitButton.addEventListener('click', playerCapture);
     submitButton.textContent = 'Save';
@@ -120,56 +120,52 @@ const createStartButton = () => {
   buttonDiv.appendChild(submitButton);
 };
 
-const gameCycle = (board,players) => {
+const gameCycle = (board, players) => {
 
 
-  const endGame = (message,player) => {
-    if (message == "Victory") {
-      window.confirm(`"You win" ${player.name}`);
+  const endGame = (message, player) => {
+    if (message ==== 'Victory') {
+      window.confirm(`You win ${player.name}`);
       document.getElementById('StartGameButton').disabled = false;
-    }else {
-      window.confirm("DRAW");
-      document.getElementById('StartGameButton').disabled = false;     
+    } else {
+      window.confirm('DRAW');
+      document.getElementById('StartGameButton').disabled = false;
     }
     flagContinue = false;
-    
-  }
-   
+  };
+
   const playerUpdate = () => {
-    
-    if (currentPlayer === player1 ) {
+    if (currentPlayer ==== player1) {
       currentPlayer = player2;
     } else {
       currentPlayer = player1;
     }
-    
-  }
+  };
 
-  const playerMovement = (evt) => {  
-   if (flagContinue) {
-    console.log(board);
-    updatedBoard=board.updateBoard(evt.target.row,evt.target.column,currentPlayer.token);
-    if (!updatedBoard ) {
-      alert("Invalid Movement, try again.");
-    } else {     
-      
-      board.drawBoard();
-      
-      if (checkVictory(board) == false){
-        playerUpdate();
+  const playerMovement = (evt) => { 
+    if (flagContinue) {
+      const updatedBoard = board.updateBoard(evt.target.row,evt.target.column,currentPlayer.token);
+      if (!updatedBoard ) {
+        alert('Invalid Movement, try again.');
       } else {
-       
-        endGame(checkVictory(board), currentPlayer);
         
-      }}
+        board.drawBoard();
+        
+        if (checkVictory(board) === false){
+          playerUpdate();
+        } else {
+        
+          endGame(checkVictory(board), currentPlayer);
+          
+        }
+      }
     }
   }
 
   const clickListener = () => {
-    
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        let id = i + '-' + j
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        let id = `${i}-${j}`
         const cellClick = document.getElementById(id);
         cellClick.onclick = playerMovement;
         cellClick.row = i;
@@ -179,26 +175,26 @@ const gameCycle = (board,players) => {
   }
 
   const checkVictory = (table) => {
-    const case1 = (table.board[0][0] == table.board[0][1]) && (table.board[0][1] == table.board[0][2]) && (table.board[0][0] != '');
-    const case2 = (table.board[1][0] == table.board[1][1]) && (table.board[1][1] == table.board[1][2]) && (table.board[1][0] != '');
-    const case3 = (table.board[2][0] == table.board[2][1]) && (table.board[2][1] == table.board[2][2]) && (table.board[2][0] != '');
-    const case4 = (table.board[0][0] == table.board[1][0]) && (table.board[1][0] == table.board[2][0]) && (table.board[0][0] != '');
-    const case5 = (table.board[0][1] == table.board[1][1]) && (table.board[1][1] == table.board[2][1]) && (table.board[0][1] != '');
-    const case6 = (table.board[0][2] == table.board[1][2]) && (table.board[1][2] == table.board[2][2]) && (table.board[0][2] != '');
-    const case7 = (table.board[0][0] == table.board[1][1]) && (table.board[1][1] == table.board[2][2]) && (table.board[1][1] != '');
-    const case8 = (table.board[0][2] == table.board[1][1]) && (table.board[1][1] == table.board[2][0]) && (table.board[1][1] != '');
+    const case1 = (table.board[0][0] === table.board[0][1]) && (table.board[0][1] === table.board[0][2]) && (table.board[0][0] !== '');
+    const case2 = (table.board[1][0] === table.board[1][1]) && (table.board[1][1] === table.board[1][2]) && (table.board[1][0] !== '');
+    const case3 = (table.board[2][0] === table.board[2][1]) && (table.board[2][1] === table.board[2][2]) && (table.board[2][0] !== '');
+    const case4 = (table.board[0][0] === table.board[1][0]) && (table.board[1][0] === table.board[2][0]) && (table.board[0][0] !== '');
+    const case5 = (table.board[0][1] === table.board[1][1]) && (table.board[1][1] === table.board[2][1]) && (table.board[0][1] !== '');
+    const case6 = (table.board[0][2] === table.board[1][2]) && (table.board[1][2] === table.board[2][2]) && (table.board[0][2] !== '');
+    const case7 = (table.board[0][0] === table.board[1][1]) && (table.board[1][1] === table.board[2][2]) && (table.board[1][1] !== '');
+    const case8 = (table.board[0][2] === table.board[1][1]) && (table.board[1][1] === table.board[2][0]) && (table.board[1][1] !== '');
 
     const cases = [case1,case2,case3,case4,case5,case6,case7,case8];
     if (cases.includes(true)){
-      return "Victory";
+      return 'Victory';
     }else if (!table.isFull()) {
-      return "DRAW";
+      return 'DRAW';
     }else {
       return false;
     }
   }
-  
-  const execute = () => {    
+
+  const execute = () => {
     flagContinue = true;
     board.cleanBoard();
     board.drawBoard();
@@ -214,8 +210,7 @@ const go = () => {
   players.push(player1);
   players.push(player2);
   document.getElementById('StartGameButton').disabled = true;
-  document.getElementById('StartGameButton').textContent = "RESTART";
-  console.log("from go proc");
+  document.getElementById('StartGameButton').textContent = 'RESTART';
   game = null;
   game = gameCycle(board,players);
   game.execute();
@@ -223,7 +218,7 @@ const go = () => {
 
 const newGame = () => {
   
-  buttonDiv = document.getElementById("buttonDiv2");
+  buttonDiv = document.getElementById('buttonDiv2');
   const submitButton = document.createElement('Button');
   submitButton.addEventListener('click', go);
   submitButton.textContent = 'START';

@@ -25,7 +25,7 @@ label {
 }
 
 .newPlayersButton {
-  padding: 5px;  
+  padding: 5px;
   border-radius: 20px;
   color: orangered;
   font-weight: bold;
@@ -33,20 +33,19 @@ label {
 }
 
 .StartButton {
-  padding: 5px;  
+  padding: 5px;
   border-radius: 20px;
   color: orangered;
   font-weight: bold;
   font-size: 15px;
 }
 
-#boardDiv{
+#boardDiv {
   display: flex;
   flex-direction: row;
   align-items: center;
   align-content: center;
   justify-content: center;
-
 }
 
 .cell {
@@ -57,7 +56,6 @@ label {
   text-align: center;
   font-size: 6rem;
   font-weight: bolder;
-  text-shadow: 0.2rem;
   color: rgba(246, 248, 244, 0.761);
   vertical-align: middle;
   padding-top: 1rem;
@@ -77,14 +75,13 @@ label {
   margin-bottom: 25px;
   background: linear-gradient(0.5turn, black, orangered, black);
   margin-top: 0;
-
 }
 
 .playerDisplay {
   color: black;
   font-weight: bold;
   padding-left: 20px;
-  padding-right: 20px;  
+  padding-right: 20px;
   font-size: 30px;
 }
 

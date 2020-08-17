@@ -4,18 +4,17 @@ let flagContinue = false;
 
 const gameBoard = () => {
   let board = [];
-  board = [['','',''],['','',''],['','','']];  
-  const updateBoard = (row,column,token) => {
-    console.log(board[row][column]+ " = " + token);
-    const cell = document.getElementById(row + '-' + column);
-    console.log(board[row][column]);
-    if (board[row][column] == '') {
+  board = [['', '', ''],['', '', ''],['', '', '']];
+  const updateBoard = (row, column, token) => {
+    
+    const cell = document.getElementById(`${row}-${column}`);
+    
+    if (board[row][column] === '') {
       board[row][column] = token;
       return board;
-    } else {
-      console.log("cell contains "+cell.innerHTML);
-      return null;
-    }
+    }      
+    return null;
+        
   }
 
   const drawBoard = () => {

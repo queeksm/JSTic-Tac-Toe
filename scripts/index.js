@@ -153,14 +153,13 @@ const gameCycle = (board, players) => {
     const case8 = (table.board[0][2] === table.board[1][1]) && (table.board[1][1] === table.board[2][0]) && (table.board[1][1] !== '');
 
     const cases = [case1, case2, case3, case4, case5, case6, case7, case8];
-    if (cases.includes(true)){
+    if (cases.includes(true)) {
       return 'Victory';
     } else if (!table.isFull()) {
       return 'DRAW';
-    } else {
-      return false;
     }
-  }
+    return false;
+  };
 
   const playerMovement = (evt) => {
     if (flagContinue) {
@@ -169,33 +168,33 @@ const gameCycle = (board, players) => {
         alert('Invalid Movement, try again.');
       } else {
         board.drawBoard();
-        if (checkVictory(board) === false){
+        if (checkVictory(board) === false) {
           playerUpdate();
         } else {
           endGame(checkVictory(board), currentPlayer);
         }
       }
     }
-  }
+  };
 
   const clickListener = () => {
     for (let i = 0; i < 3; i += 1) {
       for (let j = 0; j < 3; j += 1) {
-        let id = `${i}-${j}`
+        const id = `${i}-${j}`
         const cellClick = document.getElementById(id);
         cellClick.onclick = playerMovement;
         cellClick.row = i;
         cellClick.column = j;
       }        
     }
-  }
+  };
 
   const execute = () => {
     flagContinue = true;
     board.cleanBoard();
     board.drawBoard();
     clickListener();
-  }
+  };
   return {execute};
 }
 

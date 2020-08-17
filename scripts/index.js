@@ -1,8 +1,3 @@
-//Click start game button.
-//Generate the forms for the players.
-//fill up the forms and start the game.
-//
-
 const players = [];
 let currentPlayer;
 let flagContinue = false;
@@ -13,7 +8,6 @@ const gameBoard = () => {
   const updateBoard = (row,column,token) => {
     console.log(board[row][column]+ " = " + token);
     const cell = document.getElementById(row + '-' + column);
-    //if (cell.innerHTML == '') {
     console.log(board[row][column]);
     if (board[row][column] == '') {
       board[row][column] = token;
@@ -22,7 +16,6 @@ const gameBoard = () => {
       console.log("cell contains "+cell.innerHTML);
       return null;
     }
-    
   }
 
   const drawBoard = () => {
@@ -32,7 +25,6 @@ const gameBoard = () => {
         cell.innerHTML=board[i][j];
       }     
     }
-    
   }
 
   const cleanBoard = () => {
@@ -43,7 +35,6 @@ const gameBoard = () => {
         cell.innerHTML=board[i][j];
       }     
     }
-    
   }
 
   const isFull = () => {
@@ -65,17 +56,13 @@ const createFormDiv = () => {
 }
 
 function playerCapture(evt) {
-  // get values
-  
   const name1 = document.getElementById('nameField-1').value;
   const name2 = document.getElementById('nameField-2').value;
   player1 = player(name1, 'X');
   player2 = player(name2, 'O');
   
-  currentPlayer  = player1;
-  
-  
-  // add to table
+  currentPlayer  = player1; 
+ 
   document.getElementById("buttonDiv").remove();
   document.getElementById("saveButtonDiv").remove();
   document.getElementById(`myPlayerForm-1`).innerHTML = "";
@@ -268,15 +255,3 @@ let player2 = player('player2', 'N');
 let board = gameBoard();
 
 createStartButton();
-
-
-
-
-
-
-
-
-
-
-
-

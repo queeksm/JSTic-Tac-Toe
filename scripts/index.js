@@ -142,21 +142,37 @@ const gameCycle = (board, players) => {
     }
   };
 
-  const playerMovement = (evt) => { 
+  const checkVictory = (table) => {
+    const case1 = (table.board[0][0] === table.board[0][1]) && (table.board[0][1] === table.board[0][2]) && (table.board[0][0] !== '');
+    const case2 = (table.board[1][0] === table.board[1][1]) && (table.board[1][1] === table.board[1][2]) && (table.board[1][0] !== '');
+    const case3 = (table.board[2][0] === table.board[2][1]) && (table.board[2][1] === table.board[2][2]) && (table.board[2][0] !== '');
+    const case4 = (table.board[0][0] === table.board[1][0]) && (table.board[1][0] === table.board[2][0]) && (table.board[0][0] !== '');
+    const case5 = (table.board[0][1] === table.board[1][1]) && (table.board[1][1] === table.board[2][1]) && (table.board[0][1] !== '');
+    const case6 = (table.board[0][2] === table.board[1][2]) && (table.board[1][2] === table.board[2][2]) && (table.board[0][2] !== '');
+    const case7 = (table.board[0][0] === table.board[1][1]) && (table.board[1][1] === table.board[2][2]) && (table.board[1][1] !== '');
+    const case8 = (table.board[0][2] === table.board[1][1]) && (table.board[1][1] === table.board[2][0]) && (table.board[1][1] !== '');
+
+    const cases = [case1, case2, case3, case4, case5, case6, case7, case8];
+    if (cases.includes(true)){
+      return 'Victory';
+    } else if (!table.isFull()) {
+      return 'DRAW';
+    } else {
+      return false;
+    }
+  }
+
+  const playerMovement = (evt) => {
     if (flagContinue) {
-      const updatedBoard = board.updateBoard(evt.target.row,evt.target.column,currentPlayer.token);
-      if (!updatedBoard ) {
+      const updatedBoard = board.updateBoard(evt.target.row, evt.target.column, currentPlayer.token);
+      if (!updatedBoard) {
         alert('Invalid Movement, try again.');
       } else {
-        
         board.drawBoard();
-        
         if (checkVictory(board) === false){
           playerUpdate();
         } else {
-        
           endGame(checkVictory(board), currentPlayer);
-          
         }
       }
     }
@@ -174,57 +190,33 @@ const gameCycle = (board, players) => {
     }
   }
 
-  const checkVictory = (table) => {
-    const case1 = (table.board[0][0] === table.board[0][1]) && (table.board[0][1] === table.board[0][2]) && (table.board[0][0] !== '');
-    const case2 = (table.board[1][0] === table.board[1][1]) && (table.board[1][1] === table.board[1][2]) && (table.board[1][0] !== '');
-    const case3 = (table.board[2][0] === table.board[2][1]) && (table.board[2][1] === table.board[2][2]) && (table.board[2][0] !== '');
-    const case4 = (table.board[0][0] === table.board[1][0]) && (table.board[1][0] === table.board[2][0]) && (table.board[0][0] !== '');
-    const case5 = (table.board[0][1] === table.board[1][1]) && (table.board[1][1] === table.board[2][1]) && (table.board[0][1] !== '');
-    const case6 = (table.board[0][2] === table.board[1][2]) && (table.board[1][2] === table.board[2][2]) && (table.board[0][2] !== '');
-    const case7 = (table.board[0][0] === table.board[1][1]) && (table.board[1][1] === table.board[2][2]) && (table.board[1][1] !== '');
-    const case8 = (table.board[0][2] === table.board[1][1]) && (table.board[1][1] === table.board[2][0]) && (table.board[1][1] !== '');
-
-    const cases = [case1,case2,case3,case4,case5,case6,case7,case8];
-    if (cases.includes(true)){
-      return 'Victory';
-    }else if (!table.isFull()) {
-      return 'DRAW';
-    }else {
-      return false;
-    }
-  }
-
   const execute = () => {
     flagContinue = true;
     board.cleanBoard();
     board.drawBoard();
     clickListener();
   }
-
   return {execute};
-
 }
 
 const go = () => {
-  
   players.push(player1);
   players.push(player2);
   document.getElementById('StartGameButton').disabled = true;
   document.getElementById('StartGameButton').textContent = 'RESTART';
-  game = null;
-  game = gameCycle(board,players);
+  let game = null;
+  game = gameCycle(board, players);
   game.execute();
 }
 
 const newGame = () => {
-  
-  buttonDiv = document.getElementById('buttonDiv2');
+  const buttonDiv = document.getElementById('buttonDiv2');
   const submitButton = document.createElement('Button');
   submitButton.addEventListener('click', go);
   submitButton.textContent = 'START';
   submitButton.disabled = true;
   submitButton.setAttribute('id', 'StartGameButton');
-  submitButton.setAttribute('class','StartButton')
+  submitButton.setAttribute('class','StartButton');
   submitButton.setAttribute('type', 'button');
   buttonDiv.appendChild(submitButton);
 }

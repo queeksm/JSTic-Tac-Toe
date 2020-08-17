@@ -84,7 +84,7 @@ return {
   enableBtn
 };
 
-})();
+}());
 
 const go = () => {
   players.push(player1);

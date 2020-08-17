@@ -2,11 +2,11 @@ const players = [];
 let currentPlayer;
 let flagContinue = false;
 
+
 const gameBoard = () => {
   let board = [];
   board = [['', '', ''], ['', '', ''], ['', '', '']];
   const updateBoard = (row, column, token) => {    
-    const cell = document.getElementById(`${row}-${column}`);    
     if (board[row][column] === '') {
       board[row][column] = token;
       return board;
@@ -17,8 +17,8 @@ const gameBoard = () => {
   const drawBoard = () => {
     for (let i = 0; i < 3; i += 1) {
       for (let j = 0; j < 3; j += 1) {
-        document.getElementById(`${i}-${j}`).innerHTML = board[i][j];        
-      }     
+        document.getElementById(`${i}-${j}`).innerHTML = board[i][j];
+      } 
     }
   };
 
@@ -26,28 +26,29 @@ const gameBoard = () => {
     for (let i = 0; i < 3; i += 1) {
       for (let j = 0; j < 3; j += 1) {
         board[i][j] = '';
-        document.getElementById(`${i}-${j}`).innerHTML=board[i][j];
+        document.getElementById(`${i}-${j}`).innerHTML = board[i][j];
       }
     }
   };
 
   const isFull = () => {
-    let condition = board[0].includes('') || board[1].includes('') || board[2].includes('');
+    const condition = board[0].includes('') || board[1].includes('') || board[2].includes('');
     return condition;
   };
 
-  return { board, updateBoard, drawBoard, cleanBoard, isFull};
+  return { 
+    board, updateBoard, drawBoard, cleanBoard, isFull
+  };
+
 };
 
 const player = (name, token) => {
   return {name, token};
 };
 
-const createFormDiv = () => {
-  const formDiv = document.createElement("div");
-  formDiv.setAttribute("id", "divForm")
-  document.appendChild(formDiv);
-}
+let player1 = player('player1', 'T');
+let player2 = player('player2', 'N');
+let board = gameBoard();
 
 function playerCapture(evt) {
   const name1 = document.getElementById('nameField-1').value;
@@ -55,14 +56,13 @@ function playerCapture(evt) {
   player1 = player(name1, 'X');
   player2 = player(name2, 'O');
   
-  currentPlayer  = player1; 
- 
-  document.getElementById("buttonDiv").remove();
-  document.getElementById("saveButtonDiv").remove();
-  document.getElementById(`myPlayerForm-1`).innerHTML = "";
-  document.getElementById(`myPlayerForm-2`).innerHTML = "";
+  currentPlayer = player1;
+
+  document.getElementById('buttonDiv').remove();
+  document.getElementById('saveButtonDiv').remove();
+  document.getElementById(`myPlayerForm-1`).innerHTML = '';
+  document.getElementById(`myPlayerForm-2`).innerHTML = '';
   document.getElementById('StartGameButton').disabled = false;
-  divForm.innerHTML = '';
 
   const playerDiv1 = document.getElementById('Player1');
   const playerDiv2 = document.getElementById('Player2');
@@ -71,16 +71,15 @@ function playerCapture(evt) {
   playerDiv2.innerHTML = `${player2.name}, You're ${player2.token}`;
 }
 
-const formRender = (formDiv, PNumber ) => {
-  
+const formRender = (formDiv, PNumber) => {
   formDiv.innerHTML = '';
 
   const newPlayerForm = document.createElement('FORM');
   newPlayerForm.setAttribute('id', `myPlayerForm-${PNumber}`);
   formDiv.appendChild(newPlayerForm);
 
-  const fieldLabel = document.createElement("label");
-  fieldLabel.textContent = "Player" + PNumber  + " Name ";
+  const fieldLabel = document.createElement('label');
+  fieldLabel.textContent = 'Player' + PNumber + ' Name ';
   newPlayerForm.appendChild(fieldLabel);
 
   const playerName = document.createElement('INPUT');
@@ -91,35 +90,35 @@ const formRender = (formDiv, PNumber ) => {
 
   const saveButtonDiv = document.getElementById('saveButtonDiv');
 
-  if (PNumber == 2) {
+  if (PNumber === 2) {
     const submitButton = document.createElement('Button');
     submitButton.addEventListener('click', playerCapture);
     submitButton.textContent = 'Save';
-    submitButton.setAttribute('class', 'SaveButton')
+    submitButton.setAttribute('class', 'SaveButton');
     submitButton.setAttribute('type', 'button');
     submitButton.number = PNumber;
 
     saveButtonDiv.appendChild(submitButton);
   }
-}
+};
 
 const startGame = () => {
-  formDiv = document.getElementById("divForm");
-  formDiv2 = document.getElementById("divForm2");
-  buttonDisable = document.getElementById("111");
+  const formDiv = document.getElementById('divForm');
+  const formDiv2 = document.getElementById('divForm2');
+  buttonDisable = document.getElementById('111');
   buttonDisable.disabled = true;
   formRender(formDiv, 1);
   formRender(formDiv2, 2);
-  newGame();  
+  newGame();
 }
 
 const createStartButton = () => {
   
-  buttonDiv = document.getElementById("buttonDiv");
+  buttonDiv = document.getElementById('buttonDiv');
   const submitButton = document.createElement('Button');
   submitButton.addEventListener('click', startGame);
-  submitButton.setAttribute("id","111");
-  submitButton.setAttribute("class", "newPlayersButton")
+  submitButton.setAttribute('id','111');
+  submitButton.setAttribute('class', 'newPlayersButton')
   submitButton.textContent = 'New Players';
   submitButton.setAttribute('type', 'button');
   buttonDiv.appendChild(submitButton);
@@ -207,7 +206,6 @@ const gameCycle = (board,players) => {
     flagContinue = true;
     board.cleanBoard();
     board.drawBoard();
-    console.log("inside execute "+board.board);
     clickListener();
   }
 
@@ -239,13 +237,5 @@ const newGame = () => {
   submitButton.setAttribute('type', 'button');
   buttonDiv.appendChild(submitButton);
 }
-
-
-
-let player1 = player('player1', 'T');
-
-let player2 = player('player2', 'N');
-
-let board = gameBoard();
 
 createStartButton();

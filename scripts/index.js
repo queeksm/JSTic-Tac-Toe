@@ -5,13 +5,12 @@ let player1 = player('player1', 'T');
 let player2 = player('player2', 'N');
 const board = gameBoard();
 
-let DOMControl = (function (){
-  
+let DOMControl = (function () {
   function writeInCell(i, j, value) {
     document.getElementById(`${i}-${j}`).innerHTML = value;
   }
 
-  function removePlayerForm(){
+  function removePlayerForm() {
     document.getElementById('buttonDiv').remove();
     document.getElementById('saveButtonDiv').remove();
     document.getElementById('myPlayerForm-1').innerHTML = '';
@@ -82,7 +81,6 @@ let DOMControl = (function (){
     writeInCell,
     enableBtn,
   };
-
 }());
 
 const go = () => {

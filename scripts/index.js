@@ -6,7 +6,7 @@ let flagContinue = false;
 const gameBoard = () => {
   let board = [];
   board = [['', '', ''], ['', '', ''], ['', '', '']];
-  const updateBoard = (row, column, token) => {    
+  const updateBoard = (row, column, token) => {
     if (board[row][column] === '') {
       board[row][column] = token;
       return board;
@@ -18,7 +18,7 @@ const gameBoard = () => {
     for (let i = 0; i < 3; i += 1) {
       for (let j = 0; j < 3; j += 1) {
         document.getElementById(`${i}-${j}`).innerHTML = board[i][j];
-      } 
+      }
     }
   };
 
@@ -36,32 +36,29 @@ const gameBoard = () => {
     return condition;
   };
 
-  return { 
-    board, updateBoard, drawBoard, cleanBoard, isFull
+  return {
+    board, updateBoard, drawBoard, cleanBoard, isFull,
   };
-
 };
 
-const player = (name, token) => {
-  return {name, token};
-};
+const player = (name, token) => ({name, token});
 
 let player1 = player('player1', 'T');
 let player2 = player('player2', 'N');
-let board = gameBoard();
+const board = gameBoard();
 
-function playerCapture(evt) {
+function playerCapture() {
   const name1 = document.getElementById('nameField-1').value;
   const name2 = document.getElementById('nameField-2').value;
   player1 = player(name1, 'X');
   player2 = player(name2, 'O');
-  
+
   currentPlayer = player1;
 
   document.getElementById('buttonDiv').remove();
   document.getElementById('saveButtonDiv').remove();
-  document.getElementById(`myPlayerForm-1`).innerHTML = '';
-  document.getElementById(`myPlayerForm-2`).innerHTML = '';
+  document.getElementById('myPlayerForm-1').innerHTML = '';
+  document.getElementById('myPlayerForm-2').innerHTML = '';
   document.getElementById('StartGameButton').disabled = false;
 
   const playerDiv1 = document.getElementById('Player1');
@@ -79,7 +76,7 @@ const formRender = (formDiv, PNumber) => {
   formDiv.appendChild(newPlayerForm);
 
   const fieldLabel = document.createElement('label');
-  fieldLabel.textContent = 'Player' + PNumber + ' Name ';
+  fieldLabel.textContent = `Player ${PNumber} Name `;
   newPlayerForm.appendChild(fieldLabel);
 
   const playerName = document.createElement('INPUT');
@@ -105,24 +102,23 @@ const formRender = (formDiv, PNumber) => {
 const startGame = () => {
   const formDiv = document.getElementById('divForm');
   const formDiv2 = document.getElementById('divForm2');
-  buttonDisable = document.getElementById('111');
+  const buttonDisable = document.getElementById('111');
   buttonDisable.disabled = true;
   formRender(formDiv, 1);
   formRender(formDiv2, 2);
   newGame();
-}
+};
 
 const createStartButton = () => {
-  
-  buttonDiv = document.getElementById('buttonDiv');
+  const buttonDiv = document.getElementById('buttonDiv');
   const submitButton = document.createElement('Button');
   submitButton.addEventListener('click', startGame);
-  submitButton.setAttribute('id','111');
-  submitButton.setAttribute('class', 'newPlayersButton')
+  submitButton.setAttribute('id', '111');
+  submitButton.setAttribute('class', 'newPlayersButton');
   submitButton.textContent = 'New Players';
   submitButton.setAttribute('type', 'button');
   buttonDiv.appendChild(submitButton);
-}
+};
 
 const gameCycle = (board,players) => {
 

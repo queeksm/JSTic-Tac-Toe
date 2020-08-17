@@ -6,8 +6,11 @@
   <title>TIC-TAC-TOE</title>
 </head>
 <body>
-  <div id = "Player1"></div>
-  <div id = "Player2"></div>
+  <div class = "playerContainer">
+    <div id = "Player1" class = "playerDisplay"></div>
+    <div class = "versus"> VS</div>
+    <div id = "Player2" class = "playerDisplay"></div>
+  </div>  
   <div id = "boardDiv">
     <table id="board-table">
       <tr>
@@ -45,10 +48,19 @@
       </tr>
     </table>
   </div>
-  <div id = "divForm"></div>
-  <div id = "divForm2"></div>
-  <div id = "buttonDiv"></div>
-  <div id = "buttonDiv2"></div>
+
+  <div class = "BottomContainer">
+    <div class = "PlayersForms">
+      <div id = "divForm"></div>
+      <div id = "divForm2"></div>
+      <div id = "saveButtonDiv"></div>
+    </div>    
+    <div class = "buttons">
+      <div id = "buttonDiv"></div>
+      <div id = "buttonDiv2"></div>
+    </div>    
+  </div>
+  
 </body>
 <script src="scripts/index.js"></script>
 </html>

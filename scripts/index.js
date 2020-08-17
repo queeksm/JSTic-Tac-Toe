@@ -132,7 +132,8 @@ const gameCycle = (board) => {
     const cases = [case1, case2, case3, case4, case5, case6, case7, case8];
     if (cases.includes(true)) {
       return 'Victory';
-    } else if (!table.isFull()) {
+    }    
+    if (!table.isFull()) {
       return 'DRAW';
     }
     return false;
@@ -162,7 +163,7 @@ const gameCycle = (board) => {
         cellClick.onclick = playerMovement;
         cellClick.row = i;
         cellClick.column = j;
-      }    
+      }
     }
   };
 

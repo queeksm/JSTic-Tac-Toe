@@ -99,30 +99,7 @@ const formRender = (formDiv, PNumber) => {
   }
 };
 
-const startGame = () => {
-  const formDiv = document.getElementById('divForm');
-  const formDiv2 = document.getElementById('divForm2');
-  const buttonDisable = document.getElementById('111');
-  buttonDisable.disabled = true;
-  formRender(formDiv, 1);
-  formRender(formDiv2, 2);
-  newGame();
-};
-
-const createStartButton = () => {
-  const buttonDiv = document.getElementById('buttonDiv');
-  const submitButton = document.createElement('Button');
-  submitButton.addEventListener('click', startGame);
-  submitButton.setAttribute('id', '111');
-  submitButton.setAttribute('class', 'newPlayersButton');
-  submitButton.textContent = 'New Players';
-  submitButton.setAttribute('type', 'button');
-  buttonDiv.appendChild(submitButton);
-};
-
-const gameCycle = (board, players) => {
-
-
+const gameCycle = (board) => {
   const endGame = (message, player) => {
     if (message === 'Victory') {
       window.confirm(`You win ${player.name}`);
@@ -180,12 +157,12 @@ const gameCycle = (board, players) => {
   const clickListener = () => {
     for (let i = 0; i < 3; i += 1) {
       for (let j = 0; j < 3; j += 1) {
-        const id = `${i}-${j}`
+        const id = `${i}-${j}`;
         const cellClick = document.getElementById(id);
         cellClick.onclick = playerMovement;
         cellClick.row = i;
         cellClick.column = j;
-      }        
+      }    
     }
   };
 
@@ -195,8 +172,8 @@ const gameCycle = (board, players) => {
     board.drawBoard();
     clickListener();
   };
-  return {execute};
-}
+  return { execute };
+};
 
 const go = () => {
   players.push(player1);
@@ -204,9 +181,9 @@ const go = () => {
   document.getElementById('StartGameButton').disabled = true;
   document.getElementById('StartGameButton').textContent = 'RESTART';
   let game = null;
-  game = gameCycle(board, players);
+  game = gameCycle(board);
   game.execute();
-}
+};
 
 const newGame = () => {
   const buttonDiv = document.getElementById('buttonDiv2');
@@ -215,9 +192,30 @@ const newGame = () => {
   submitButton.textContent = 'START';
   submitButton.disabled = true;
   submitButton.setAttribute('id', 'StartGameButton');
-  submitButton.setAttribute('class','StartButton');
+  submitButton.setAttribute('class', 'StartButton');
   submitButton.setAttribute('type', 'button');
   buttonDiv.appendChild(submitButton);
-}
+};
+
+const startGame = () => {
+  const formDiv = document.getElementById('divForm');
+  const formDiv2 = document.getElementById('divForm2');
+  const buttonDisable = document.getElementById('111');
+  buttonDisable.disabled = true;
+  formRender(formDiv, 1);
+  formRender(formDiv2, 2);
+  newGame();
+};
+
+const createStartButton = () => {
+  const buttonDiv = document.getElementById('buttonDiv');
+  const submitButton = document.createElement('Button');
+  submitButton.addEventListener('click', startGame);
+  submitButton.setAttribute('id', '111');
+  submitButton.setAttribute('class', 'newPlayersButton');
+  submitButton.textContent = 'New Players';
+  submitButton.setAttribute('type', 'button');
+  buttonDiv.appendChild(submitButton);
+};
 
 createStartButton();

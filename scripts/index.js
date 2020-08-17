@@ -7,7 +7,7 @@ const gameBoard = () => {
   let board = [];
   board = [['', '', ''], ['', '', ''], ['', '', '']];
   const updateBoard = (row, column, token) => {
-    if (board[row][column] ==== '') {
+    if (board[row][column] === '') {
       board[row][column] = token;
       return board;
     }
@@ -87,7 +87,7 @@ const formRender = (formDiv, PNumber) => {
 
   const saveButtonDiv = document.getElementById('saveButtonDiv');
 
-  if (PNumber ==== 2) {
+  if (PNumber === 2) {
     const submitButton = document.createElement('Button');
     submitButton.addEventListener('click', playerCapture);
     submitButton.textContent = 'Save';
@@ -124,7 +124,7 @@ const gameCycle = (board, players) => {
 
 
   const endGame = (message, player) => {
-    if (message ==== 'Victory') {
+    if (message === 'Victory') {
       window.confirm(`You win ${player.name}`);
       document.getElementById('StartGameButton').disabled = false;
     } else {
@@ -135,7 +135,7 @@ const gameCycle = (board, players) => {
   };
 
   const playerUpdate = () => {
-    if (currentPlayer ==== player1) {
+    if (currentPlayer === player1) {
       currentPlayer = player2;
     } else {
       currentPlayer = player1;

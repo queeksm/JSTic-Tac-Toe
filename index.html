@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link type="text/css" rel="stylesheet" href="css/styles.css">
+  <title>TIC-TAC-TOE</title>
+</head>
+<body>
+  <div class = "playerContainer">
+    <div id = "Player1" class = "playerDisplay"></div>
+    <div class = "versus"> VS</div>
+    <div id = "Player2" class = "playerDisplay"></div>
+  </div>
+  <div class = "victoryScreenStyle" id = "victoryScreen"></div>
+  <div id = "boardDiv">
+    <table id="board-table">
+      <tr>
+        <td>
+          <div id = "0-0" class = "cell" onclick=""></div>
+        </td>
+        <td>
+          <div id = "0-1" class = "cell"></div>
+        </td>
+        <td>
+          <div id = "0-2" class = "cell"></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id = "1-0" class = "cell"></div>
+        </td>
+        <td>
+          <div id = "1-1" class = "cell"></div>
+        </td>
+        <td>
+          <div id = "1-2" class = "cell"></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id = "2-0" class = "cell"></div>
+        </td>
+        <td>
+          <div id = "2-1" class = "cell"></div>
+        </td>
+        <td>
+          <div id = "2-2" class = "cell"></div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class = "BottomContainer">
+    <div class = "PlayersForms">
+      <div id = "divForm"></div>
+      <div id = "divForm2"></div>
+      <div id = "saveButtonDiv"></div>
+    </div>    
+    <div class = "buttons">
+      <div id = "buttonDiv"></div>
+      <div id = "buttonDiv2"></div>
+    </div>    
+  </div>
+  
+</body>
+<script src="scripts/gamelogic.js"></script>
+<script src="scripts/player.js"></script>
+<script src="scripts/gameboard.js"></script>
+<script src="scripts/index.js"></script>
+</html>

@@ -1,0 +1,1 @@
+const player = (name, token) => ({ name, token });

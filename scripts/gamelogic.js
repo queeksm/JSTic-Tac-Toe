@@ -3,11 +3,11 @@ const gameCycle = (board) => {
     if (message === 'Victory') {
       board.drawBoard();
       DOMControl.enableBtn();
-      DOMControl.drawResult(message,player);
+      DOMControl.drawResult(message, player);
     } else {
       board.drawBoard();
       DOMControl.enableBtn();
-      DOMControl.drawResult(message,player);
+      DOMControl.drawResult(message, player);
     }
     flagContinue = false;
   };

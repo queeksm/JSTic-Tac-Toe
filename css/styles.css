@@ -99,3 +99,10 @@ label {
   align-items: center;
   justify-content: center;
 }
+
+.victoryScreenStyle {
+  justify-content: center;
+  text-align: center;
+  font-size: 45px;
+  font-weight: bold;
+}

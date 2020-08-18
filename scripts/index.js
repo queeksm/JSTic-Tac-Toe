@@ -10,6 +10,16 @@ let DOMControl = (function () {
     document.getElementById(`${i}-${j}`).innerHTML = value;
   }
 
+  function drawResult(text,player) {
+    if (text === 'Victory'){
+      document.getElementById('victoryScreen').style.display = "block";
+      document.getElementById('victoryScreen').textContent = `You win ${player.name}`;
+    } else {
+      document.getElementById('victoryScreen').style.display = "block";
+      document.getElementById('victoryScreen').textContent = 'Draw';
+    }
+  }
+
   function removePlayerForm() {
     document.getElementById('buttonDiv').remove();
     document.getElementById('saveButtonDiv').remove();
@@ -80,6 +90,7 @@ let DOMControl = (function () {
     formRender,
     writeInCell,
     enableBtn,
+    drawResult,
   };
 }());
 

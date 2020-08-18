@@ -1,11 +1,13 @@
 const gameCycle = (board) => {
   const endGame = (message, player) => {
     if (message === 'Victory') {
-      window.confirm(`You win ${player.name}`);
+      board.drawBoard();
       DOMControl.enableBtn();
+      DOMControl.drawResult(message,player);
     } else {
-      window.confirm('DRAW');
+      board.drawBoard();
       DOMControl.enableBtn();
+      DOMControl.drawResult(message,player);
     }
     flagContinue = false;
   };
@@ -70,6 +72,7 @@ const gameCycle = (board) => {
     flagContinue = true;
     board.cleanBoard();
     board.drawBoard();
+    document.getElementById('victoryScreen').textContent = '';
     clickListener();
   };
   return { execute };
